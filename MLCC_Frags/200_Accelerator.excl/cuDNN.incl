@@ -1,0 +1,19 @@
+
+# Install NVIDIA cuDNN
+
+COPY MLCC_Repos/NVIDIA_PKGS/cudnn-${CUDA_VERSION}-linux-x64*.tgz /tmp/ 
+
+RUN set -vx \
+\
+&& cd /tmp \
+&& tar -xvf cudnn*.tgz \
+&& cd /tmp/cuda \
+\
+&& mv include/cudnn.h /usr/local/cuda/include \
+&& mv lib64/lib* /usr/local/cuda/lib64 \
+\
+&& cd /tmp \
+&& /bin/rm -rf /tmp/cud* \
+\
+&& ldconfig
+

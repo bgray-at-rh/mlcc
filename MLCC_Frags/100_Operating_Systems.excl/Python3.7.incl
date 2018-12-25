@@ -1,0 +1,55 @@
+
+# Install Python3.7.1
+
+RUN set -vx \
+\
+&& /tmp/yum_install.sh \
+    bzip2-devel \
+    expat-devel \
+    gdbm-devel \
+    libdb4-devel \
+    libffi-devel \
+    ncurses-devel \
+    openssl-devel \
+    readline-devel \
+    sqlite-devel \
+    tk-devel \
+    xz-devel \
+    zlib-devel \
+&& cd /var/cache \
+&& /bin/rm -rf dnf yum \
+\
+&& cd /tmp \
+&& wget "https://www.python.org/ftp/python/3.7.1/Python-3.7.1.tar.xz" \
+&& tar -xf Python*.xz \
+&& /bin/rm Python*.xz \
+&& cd /tmp/Python* \
+&& ./configure \
+    --enable-optimizations \
+    --enable-shared \
+    --prefix=/usr/local \
+    --with-ensurepip=install \
+    LDFLAGS="-Wl,-rpath /usr/local/lib" \
+&& make -j`getconf _NPROCESSORS_ONLN` install \
+\
+&& cd /usr/local/include \
+&& PYTHON_INC_DIR_NAME=`ls -d python*` \
+&& ALT_PYTHON_INC_DIR_NAME=${PYTHON_INC_DIR_NAME%m} \
+&& if [ "$ALT_PYTHON_INC_DIR_NAME" != "$PYTHON_INC_DIR_NAME" ]; then \
+    ln -s "$PYTHON_INC_DIR_NAME" "$ALT_PYTHON_INC_DIR_NAME"; \
+fi \
+\
+&& cd /tmp \
+&& /bin/rm -r /tmp/Python* \
+\
+&& /usr/local/bin/pip3 -v install --upgrade \
+    pip \
+    setuptools \
+\
+&& if python --version > /dev/null 2>&1; then \
+    whereis python; \
+else \
+    cd /usr/local/bin; \
+    ln -s python3 python; \
+fi
+

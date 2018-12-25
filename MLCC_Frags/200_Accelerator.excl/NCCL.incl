@@ -1,0 +1,23 @@
+
+# Install NVIDIA NCCL
+
+RUN set -vx \
+\
+&& cd /tmp \
+&& git clone --depth 1 "https://github.com/NVIDIA/nccl.git" \
+&& cd /tmp/nccl \
+\
+&& if grep install Makefile ; then \
+    echo "Makefile already has install target"; \
+else \
+    echo "install: src.install" >> Makefile; \
+fi \
+\
+&& make -j`getconf _NPROCESSORS_ONLN` src.build \
+&& make -j`getconf _NPROCESSORS_ONLN` install \
+\
+&& cd /tmp \
+&& /bin/rm -rf /tmp/nccl* \
+\
+&& ldconfig 
+

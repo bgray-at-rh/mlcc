@@ -1,0 +1,48 @@
+
+# Install Basic OS Tools
+
+RUN set -vx \
+\
+&& echo -e '\
+set -vx \n\
+for (( TRY=1; TRY<=11; TRY++ )); do \n\
+    yum -y -v install $@ \n\
+    result=$? \n\
+    for PKG in $@ ; do \n\
+        yum list installed | grep "^$PKG" \n\
+        (( result += $? )) \n\
+    done \n\
+    if (( $result == 0 )); then \n\
+        /bin/rm -rf /var/cache/yum \n\
+        /bin/rm -rf /var/cache/dnf \n\
+        exit 0 \n\
+    fi \n\
+    sleep 10 \n\
+done \n\
+exit 1 \n' \
+> /tmp/yum_install.sh \
+\
+&& chmod +x /tmp/yum_install.sh \
+\
+&& cd /usr/local \
+&& /bin/rm -rf lib64 \
+&& ln -s lib lib64 \
+\
+&& /tmp/yum_install.sh \
+    binutils \
+    bzip2 \
+    findutils \
+    gcc \
+    gcc-c++ \
+    gcc-gfortran \
+    git \
+    gzip \
+    make \
+    patch \
+    pciutils \
+    unzip \
+    vim-enhanced \
+    wget \
+    xz \
+    zip
+

@@ -1,0 +1,16 @@
+
+# Install CMake v3.13.2
+
+RUN set -vx \
+\
+&& cd /tmp \
+&& wget "https://cmake.org/files/v3.13/cmake-3.13.2.tar.gz" \
+&& tar -xf cmake*.gz \
+&& /bin/rm cmake*.gz \
+&& cd /tmp/cmake* \
+&& ./bootstrap \
+&& make -j`getconf _NPROCESSORS_ONLN` install \
+&& cd /tmp \
+&& /bin/rm -rf /tmp/cmake* \
+&& cmake --version
+

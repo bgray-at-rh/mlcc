@@ -1,0 +1,49 @@
+
+# Install old GCC v7.4 if necessary
+
+RUN set -vx \
+\
+&& GCC_VERSION_OUTPUT=`gcc --version` \
+&& if [ "${GCC_VERSION_OUTPUT:10:1}" -gt 7 ]; then \
+\
+    mkdir -p /tmp/gcc_tmp_build_dir; \
+    cd /tmp/gcc_tmp_build_dir; \
+\
+    wget -q "https://ftp.gnu.org/gnu/gcc/gcc-7.4.0/gcc-7.4.0.tar.xz"; \
+    wget -q "https://gcc.gnu.org/pub/gcc/infrastructure/gmp-6.1.0.tar.bz2"; \
+    wget -q "https://gcc.gnu.org/pub/gcc/infrastructure/mpfr-3.1.4.tar.bz2"; \
+    wget -q "https://gcc.gnu.org/pub/gcc/infrastructure/mpc-1.0.3.tar.gz"; \
+    wget -q "https://gcc.gnu.org/pub/gcc/infrastructure/isl-0.18.tar.bz2"; \
+\
+    tar -xf gcc-7.4.0.tar.xz; \
+    tar -xf gmp-6.1.0.tar.bz2; \
+    tar -xf mpfr-3.1.4.tar.bz2; \
+    tar -xf mpc-1.0.3.tar.gz; \
+    tar -xf isl-0.18.tar.bz2; \
+\
+    ln -s /tmp/gcc_tmp_build_dir/gmp-6.1.0 gcc-7.4.0/gmp; \
+    ln -s /tmp/gcc_tmp_build_dir/mpfr-3.1.4 gcc-7.4.0/mpfr; \
+    ln -s /tmp/gcc_tmp_build_dir/mpc-1.0.3 gcc-7.4.0/mpc; \
+    ln -s /tmp/gcc_tmp_build_dir/isl-0.18 gcc-7.4.0/isl; \
+\
+    gcc-7.4.0/configure --disable-multilib --enable-languages=c,c++,fortran --prefix=/usr/local; \
+    make -j`getconf _NPROCESSORS_ONLN`; \
+    make install-strip; \
+\
+    cd /tmp; \
+    /bin/rm -rf /tmp/gcc_tmp_build_dir; \
+\
+    ln -s /usr/local/bin/gcc /usr/local/cuda/bin/gcc; \
+    ln -s /usr/local/bin/g++ /usr/local/cuda/bin/g++; \
+    export CC="/usr/local/bin/gcc"; \
+    export CXX="/usr/local/bin/g++"; \
+\
+    echo -e '\
+    \n\
+    export CC="/usr/local/bin/gcc" \n\
+    export CXX="/usr/local/bin/g++" \n\
+    \n' \
+    >> ~/.bashrc; \
+\
+fi
+
