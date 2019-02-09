@@ -1,7 +1,7 @@
 
-# Install Tensorflow, using bazel v0.21.0
+# Build and install Tensorflow r1.13 -- by using bazel v0.21.0
 
-REQUIRE Numpy
+REQUIRE Numpy,Pandas,Matplotlib
 
 RUN set -vx \
 \
@@ -18,6 +18,8 @@ RUN set -vx \
     keras_preprocessing \
     mock \
     pip \
+    six \
+    tensorflow-estimator==1.13.0rc0 \
     wheel \
 \
 && if [ -x /usr/local/bin/python3 ]; then \
@@ -42,9 +44,9 @@ fi \
     export TF_CUDA_CLANG=0; \
     export TF_CUDA_COMPUTE_CAPABILITIES="5.2,6.0,6.1,7.0"; \
     export TF_CUDA_VERSION=${CUDA_VERSION}; \
-    CUDNN_BASE_NAME=`basename /usr/local/cuda/targets/x86_64-linux/lib/libcudnn.so.???*` \
+    CUDNN_BASE_NAME=`basename /usr/local/cuda/targets/x86_64-linux/lib/libcudnn.so.???*`; \
     export TF_CUDNN_VERSION=${CUDNN_BASE_NAME##libcudnn.so.}; \
-    NCCL_BASE_NAME=`basename /usr/local/lib/libnccl.so.???*` \
+    NCCL_BASE_NAME=`basename /usr/local/lib/libnccl.so.???*`; \
     export TF_NCCL_VERSION=${NCCL_BASE_NAME##libnccl.so.}; \
     export TF_NEED_CUDA=1; \
     export MLCC_BAZEL_BUILD_OPTIONS="--copt=-mavx2 --copt=-mfma --config=cuda --copt=-mfpmath=both"; \
@@ -81,7 +83,7 @@ fi \
 \
 && git clone "https://github.com/tensorflow/tensorflow.git" \
 && cd /tmp/tensorflow \
-&& git checkout master \
+&& git checkout r1.13 \
 && df -h \
 && bazel clean \
 && ./configure \
