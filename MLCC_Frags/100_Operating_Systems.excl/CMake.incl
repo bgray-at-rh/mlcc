@@ -1,10 +1,10 @@
 
-# Install CMake v3.13.2
+# Install CMake v3.13.3
 
 RUN set -vx \
 \
 && cd /tmp \
-&& wget "https://cmake.org/files/v3.13/cmake-3.13.2.tar.gz" \
+&& wget "https://cmake.org/files/v3.13/cmake-3.13.3.tar.gz" \
 && tar -xf cmake*.gz \
 && /bin/rm cmake*.gz \
 && cd /tmp/cmake* \
