@@ -17,7 +17,7 @@ echo gpgcheck=0 \n' \
 >> /tmp/Make_CUDA_Repo.sh \
 && sh /tmp/Make_CUDA_Repo.sh \
 \
-&& /tmp/yum_install.sh cuda-10.0 \
+&& /tmp/yum_install.sh cuda-10-0 \
 \
 && echo -e '\
 \n\
