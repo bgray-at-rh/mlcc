@@ -11,7 +11,6 @@ You can get a free RHEL developer subscription at https://developers.redhat.com/
 To install EPEL, do:  yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
 
 To install NVIDIA's CUDA stack see:  https://docs.nvidia.com/cuda/cuda-installation-guide-linux/index.html
-Download NVIDIA's cuDNN. See: MLCC\_Repos/NVIDIA\_PKGS/README.txt
 
 
 Some gtk packages are needed to build the MLCC GUI:  yum install gnome-devel-docs gtk+ gtk3-devel gtk3-devel-docs gtk+-devel gtk-doc libcanberra-gtk3
@@ -20,6 +19,7 @@ Compile MLCC with GUI:  gcc -std=gnu99 -g -Wall -o mlcc mlcc.c -DGUI `pkg-config
 
 
 Use mlcc via GUI:  mlcc -G
+(There might be some harmless gtk messages if there are missing fonts, etc)
 
 Use mlcc via interactive terminal menus:  mlcc -I
 
