@@ -44,13 +44,13 @@ Use MLCC via "-i" interface:
 mlcc -i RHEL7.5,CUDA9.2,Pandas,TensorFlow,Keras
 ```
 With the Makefile you can use:
-'''
+```
 make test
-'''
+```
 to test build dozens of various container imagess.  You can also use something like:
-'''
+```
 make test SUBSET=tensorflow
-'''
+```
 to selectively build subsets of the MLCC sample test commands.  Note that building many container images from source can take many hours to complete.  After the images are initially built, the containers should start up in a fraction of a second.
 
 Use podman for building and running containers. See:  https://podman.io and the podman scripts.
