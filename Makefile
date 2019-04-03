@@ -1,6 +1,6 @@
 
 SHELL:=/bin/bash
-HOSTNAME:=$(shell echo $${HOSTNAME%%\.*})
+HOSTNAMEDATE:=$(shell echo $${HOSTNAME%%\.*}.`date +"%Y%m%d%H%M%S"`)
 
 
 GUI-OPTS = -DGUI `pkg-config --cflags gtk+-3.0` `pkg-config --libs gtk+-3.0`
@@ -17,5 +17,5 @@ install-gui-prereqs:
 
 test: mlcc
 	mkdir -p Test_Results
-	nohup ./test.sh $(SUBSET) > Test_Results/$(HOSTNAME).nohup.out 2>&1 &
+	nohup ./test.sh $(SUBSET) > Test_Results/$(HOSTNAMEDATE).nohup.out 2>&1 &
 
