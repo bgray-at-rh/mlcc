@@ -6,7 +6,9 @@ RUN set -vx \
 && echo -e '\
 set -vx \n\
 PYTORCH_VERSION="torch-1.0.0" \n\
-if [ -d "/usr/local/cuda-10.0" ]; then \n\
+if [ -d "/usr/local/cuda-10.1" ]; then \n\
+    CUDA_VER="cu101" \n\
+elif [ -d "/usr/local/cuda-10.0" ]; then \n\
     CUDA_VER="cu100" \n\
 elif [ -d "/usr/local/cuda-9.2" ]; then \n\
     CUDA_VER="cu90" \n\

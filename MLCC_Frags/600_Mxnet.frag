@@ -5,7 +5,9 @@ RUN set -vx \
 \
 && echo -e '\
 set -vx \n\
-if [ -d "/usr/local/cuda-10.0" ]; then \n\
+if [ -d "/usr/local/cuda-10.1" ]; then \n\
+    echo "mxnet-cu101" \n\
+elif [ -d "/usr/local/cuda-10.0" ]; then \n\
     echo "mxnet-cu100" \n\
 elif [ -d "/usr/local/cuda-9.2" ]; then \n\
     echo "mxnet-cu92" \n\
